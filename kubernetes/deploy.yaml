@@ -2,35 +2,42 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: Delegate-service
-  name: Delegate-service
+    app: nimble-platform
+  name: delegate-service
+  namespace: nimble-platform
 spec:
-  replicas: 1
   selector:
     matchLabels:
       app: Delegate-service
-  strategy:
-    rollingUpdate:
-      maxSurge: 1
-      maxUnavailable: 1
-    type: RollingUpdate
-  revisionHistoryLimit: 2
   template:
     metadata:
       labels:
-        app: Delegate-service
+        app: delegate-service
     spec:
       containers:
-      - image: nimbleplatform/Delegate-service:IMAGE_TAG
-        imagePullPolicy: Always
-        name: Delegate-service
+      - image: nimbleplatform/delegate-service:IMAGE_TAG
+        name: delegate-service
         env:
-        - name: ENVIRONMENT
-          value: "prod"
+          - name: ENVIRONMENT
+            value: "prod"
+          - name: FRONTEND_URL
+            value: https://nimble.kolayam.co.uk/
+          - name: INDEXING_SERVICE_URL
+            value: http://indexing-service
+          - name: INDEXING_SERVICE_PORT
+            value: "8080"
+          - name: EUREKA_SERVICE_URL
+            value: http://service-discovery:8761/eureka
+          - name: NIMBLE_INSTANCE_NAME
+            value: delegate-service
+          - name: DELEGATE_SERVICE_BASE_URL
+            value: http://delegate-service
+          - name: DELEGATE_SERVICE_PORT
+            value: "9265"
         ports:
-        - containerPort: 8080
-          name: http
-          protocol: TCP
+          - containerPort: 8080
+            name: http
+            protocol: TCP
         resources:
           requests:
             cpu: 400m
