@@ -16,7 +16,7 @@ spec:
         app: delegate-service
     spec:
       containers:
-      - image: nimbleplatform/delegate-service:IMAGE_TAG
+      - image: rannybal2024/delegate-service:IMAGE_TAG
         name: delegate-service
         env:
           - name: ENVIRONMENT
