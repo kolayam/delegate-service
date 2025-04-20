@@ -1,14 +1,15 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  labels:
-    app: nimble-platform
   name: delegate-service
   namespace: nimble-platform
+  labels:
+    app: nimble-platform
 spec:
+  replicas: 1
   selector:
     matchLabels:
-      app: Delegate-service
+      app: delegate-service
   template:
     metadata:
       labels:
